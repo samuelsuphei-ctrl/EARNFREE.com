@@ -1,0 +1,347 @@
+<html>
+        <head><title>Downloaded HTML</title></head>
+        <body>
+            <pre style="white-space: pre-wrap; word-wrap: break-word;">```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Small Big Game</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: white;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 450px;
+      margin: auto;
+    }
+
+    .header {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .header h1 {
+      font-size: 32px;
+      color: #38bdf8;
+    }
+
+    .header p {
+      color: #94a3b8;
+      margin-top: 8px;
+    }
+
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      padding: 25px;
+      margin-top: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    }
+
+    .round {
+      text-align: center;
+      color: #94a3b8;
+      margin-bottom: 10px;
+    }
+
+    .timer {
+      text-align: center;
+      font-size: 42px;
+      font-weight: bold;
+      color: #facc15;
+      margin: 10px 0 20px;
+    }
+
+    .number {
+      width: 120px;
+      height: 120px;
+      margin: auto;
+      border-radius: 50%;
+      background: #0f172a;
+      border: 5px solid #38bdf8;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 55px;
+      font-weight: bold;
+    }
+
+    .result {
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+
+    .small {
+      color: #22c55e;
+    }
+
+    .big {
+      color: #ef4444;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: #2563eb;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .stats {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .stat {
+      flex: 1;
+      background: #0f172a;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .stat h3 {
+      font-size: 14px;
+      color: #94a3b8;
+    }
+
+    .stat p {
+      font-size: 25px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .history {
+      margin-top: 25px;
+    }
+
+    .history h2 {
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      background: #0f172a;
+      padding: 12px;
+      margin-top: 8px;
+      border-radius: 8px;
+    }
+
+    .footer {
+      text-align: center;
+      color: #64748b;
+      font-size: 13px;
+      margin-top: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="header">
+      <h1>Small Big</h1>
+      <p>Random Number Generator</p>
+    </div>
+
+    <div class="card">
+
+      <div class="round">
+        Round #<span id="round">1</span>
+      </div>
+
+      <div class="timer" id="timer">10</div>
+
+      <div class="number" id="number">?</div>
+
+      <div class="result" id="result">
+        Waiting...
+      </div>
+
+      <button onclick="generateOutcome()">
+        Generate Result
+      </button>
+
+      <div class="stats">
+
+        <div class="stat">
+          <h3>Small</h3>
+          <p class="small" id="smallCount">0</p>
+        </div>
+
+        <div class="stat">
+          <h3>Big</h3>
+          <p class="big" id="bigCount">0</p>
+        </div>
+
+      </div>
+
+      <div class="history">
+
+        <h2>Recent Results</h2>
+
+        <div id="historyList">
+          <div class="history-item">
+            <span>No results yet</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="footer">
+      Random generator — results are not predictions.
+    </div>
+
+  </div>
+
+
+  <script>
+
+    let round = 1;
+    let smallCount = 0;
+    let bigCount = 0;
+
+    function generateOutcome() {
+
+      // Random number from 0 to 9
+      const number = Math.floor(Math.random() * 10);
+
+      // Display number
+      document.getElementById("number").textContent = number;
+
+      let resultElement = document.getElementById("result");
+
+      // Small = 0-4
+      if (number <= 4) {
+
+        resultElement.textContent = "SMALL";
+        resultElement.className = "result small";
+
+        smallCount++;
+
+        document.getElementById("smallCount").textContent =
+          smallCount;
+
+      }
+
+      // Big = 5-9
+      else {
+
+        resultElement.textContent = "BIG";
+        resultElement.className = "result big";
+
+        bigCount++;
+
+        document.getElementById("bigCount").textContent =
+          bigCount;
+      }
+
+      // Add to history
+      addHistory(number, resultElement.textContent);
+
+      // Increase round
+      round++;
+
+      document.getElementById("round").textContent = round;
+
+      // Reset timer
+      timeLeft = 10;
+
+    }
+
+
+    function addHistory(number, result) {
+
+      const historyList =
+        document.getElementById("historyList");
+
+      // Remove "No results yet"
+      if (
+        historyList.children.length === 1 &&
+        historyList.children[0].textContent.includes("No results")
+      ) {
+        historyList.innerHTML = "";
+      }
+
+      const item =
+        document.createElement("div");
+
+      item.className = "history-item";
+
+      item.innerHTML =
+        `<span>Number: ${number}</span>
+         <strong>${result}</strong>`;
+
+      historyList.prepend(item);
+
+      // Keep only latest 10 results
+      if (historyList.children.length > 10) {
+        historyList.removeChild(
+          historyList.lastChild
+        );
+      }
+    }
+
+
+    // Countdown
+    let timeLeft = 10;
+
+    setInterval(function() {
+
+      timeLeft--;
+
+      document.getElementById("timer").textContent =
+        timeLeft;
+
+      if (timeLeft <= 0) {
+
+        generateOutcome();
+
+        timeLeft = 10;
+
+      }
+
+    }, 1000);
+
+  </script>
+
+</body>
+</html>
+```
+</pre>
+        </body>
+    </html>
